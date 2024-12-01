@@ -12,6 +12,7 @@ This repository showcases advanced React concepts, with a primary focus on Redux
   - [Using Redux in React Components](#using-redux-in-react-components)
     - [Connecting Redux to React](#connecting-redux-to-react)
       - [Example: Account Operations Component](#example-account-operations-component)
+  - [Redux Middleware and Thunks](#redux-middleware-and-thunks)
   - [Legacy Usage: Connecting Redux with React Using `conect`](#legacy-usage-connecting-redux-with-react-using-conect)
       - [Example: Legacy Balance Display Component](#example-legacy-balance-display-component)
 
@@ -113,6 +114,38 @@ function AccountOperations() {
 }
 
 export default AccountOperations;
+```
+
+## Redux Middleware and Thunks
+
+**Middleware** is a function that sits between dispatching an action and reaching the reducer in the store. It allows us to run code _after_ an action is dispatched, but \_before \_it reaches the reducer.
+
+Middleware is perfect for handling:
+
+- Asynchronous code (like API calls)
+- Side effects (timers, logging, etc.)
+- Tasks that need to be run outside of the reducer
+
+**Thunk** is the most popular middleware library for Redux. It allows Redux to handle asynchronous actions, such as waiting for an API response, before dispatching the data to the store. This enables us to defer dispatching actions to the future, often after receiving data from an external source.
+
+- insted of returning an action object from the action creator function we rturn a new function
+
+```jsx
+export function deposit(amount, currency) {
+  if (currency === "USD") return { type: "account/deposit", payload: amount };
+
+  return async function (dispatch, getState) {
+    dispatch({ type: "account/convertingCurrency" });
+
+    const res = await fetch(
+      `https://api.frankfurter.app/latest?amount=${amount}&from=${currency}&to=USD`
+    );
+    const data = await res.json();
+    const converted = data.rates.USD;
+
+    dispatch({ type: "account/deposit", payload: converted });
+  };
+}
 ```
 
 ## Legacy Usage: Connecting Redux with React Using `conect`
