@@ -1,10 +1,10 @@
 <!-- @format -->
 
-# Redux Intro
+# 🏦 The React-Redux Bank ⚛️
 
 This repository showcases advanced React concepts, with a primary focus on Redux, as I learn and explore them under the guidance of my favorite teacher, Jones Schmedtamm.
 
-- [Redux Intro](#redux-intro)
+- [🏦 The React-Redux Bank ⚛️](#-the-react-redux-bank-️)
   - [Key Concepts](#key-concepts)
     - [1. Redux Store](#1-redux-store)
     - [2. Reducer](#2-reducer)
