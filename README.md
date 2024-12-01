@@ -15,6 +15,7 @@ This repository showcases advanced React concepts, with a primary focus on Redux
   - [Redux Middleware and Thunks](#redux-middleware-and-thunks)
   - [Redux Toolkit](#redux-toolkit)
     - [Creating The Store With RTK](#creating-the-store-with-rtk)
+    - [Creating Account Slice](#creating-account-slice)
   - [Legacy Usage: Connecting Redux with React Using `conect`](#legacy-usage-connecting-redux-with-react-using-conect)
       - [Example: Legacy Balance Display Component](#example-legacy-balance-display-component)
 
@@ -177,6 +178,34 @@ const store = configureStore({
 });
 
 export default store;
+```
+
+### Creating Account Slice
+
+```jsx
+import { createSlice } from "@reduxjs/toolkit";
+
+const initialState = {
+  balance: 0,
+  loan: 0,
+};
+
+const accountSlice = createSlice({
+  name: "account",
+  initialState,
+  reducers: {
+    deposit(state, action) {
+      state.balance += action.payload;
+    },
+    withdraw(state, action) {
+      state.balance -= action.payload;
+    },
+  },
+});
+
+export const { deposit, withdraw } = accountSlice.actions;
+
+export default accountSlice.reducer;
 ```
 
 ## Legacy Usage: Connecting Redux with React Using `conect`
