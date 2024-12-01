@@ -42,8 +42,6 @@ function AccountOperations() {
     dispatch(payLoan());
   }
 
-  console.log(balance);
-
   return (
     <div>
       <h2>Your account operations</h2>
