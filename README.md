@@ -13,6 +13,8 @@ This repository showcases advanced React concepts, with a primary focus on Redux
     - [Connecting Redux to React](#connecting-redux-to-react)
       - [Example: Account Operations Component](#example-account-operations-component)
   - [Redux Middleware and Thunks](#redux-middleware-and-thunks)
+  - [Redux Toolkit](#redux-toolkit)
+    - [Creating The Store With RTK](#creating-the-store-with-rtk)
   - [Legacy Usage: Connecting Redux with React Using `conect`](#legacy-usage-connecting-redux-with-react-using-conect)
       - [Example: Legacy Balance Display Component](#example-legacy-balance-display-component)
 
@@ -118,7 +120,7 @@ export default AccountOperations;
 
 ## Redux Middleware and Thunks
 
-**Middleware** is a function that sits between dispatching an action and reaching the reducer in the store. It allows us to run code _after_ an action is dispatched, but \_before \_it reaches the reducer.
+**Middleware** is a function that sits between dispatching an action and reaching the reducer in the store. It allows us to run code _after_ an action is dispatched, but _before_ it reaches the reducer.
 
 Middleware is perfect for handling:
 
@@ -128,7 +130,7 @@ Middleware is perfect for handling:
 
 **Thunk** is the most popular middleware library for Redux. It allows Redux to handle asynchronous actions, such as waiting for an API response, before dispatching the data to the store. This enables us to defer dispatching actions to the future, often after receiving data from an external source.
 
-- insted of returning an action object from the action creator function we rturn a new function
+- insted of returning an action object from the action creator function we return a new function
 
 ```jsx
 export function deposit(amount, currency) {
@@ -146,6 +148,35 @@ export function deposit(amount, currency) {
     dispatch({ type: "account/deposit", payload: converted });
   };
 }
+```
+
+## Redux Toolkit
+
+- The modern and prefered way of writing Redux code
+- An opinionated approach, forcing us to use Redux best practices
+- Built on top of clasic Redux
+- Less `boilerplate` - allow us to write a lot less code to achive the same result
+
+1. We can write code that "mutates" state inside reducers
+2. Action creators are authomatically created
+3. Automatic setup of thunk middleware and DevTools
+
+### Creating The Store With RTK
+
+```jsx
+import { configureStore } from "@reduxjs/toolkit";
+
+import accountReducer from "./features/account/accountSlice";
+import customerReducer from "./features/customers/customerSlice";
+
+const store = configureStore({
+  reducer: {
+    account: accountReducer,
+    customer: customerReducer,
+  },
+});
+
+export default store;
 ```
 
 ## Legacy Usage: Connecting Redux with React Using `conect`
